@@ -10,7 +10,7 @@
 $_['heading_title'] = 'Easebuzz';
 
 // Text
-$_['text_title'] = 'Easebuzz';
+$_['text_title'] = 'Pay Online (Upto 50% returns)';
 $_['text_easebuzz_order'] = 'Order';
 $_['text_easebuzz_discount'] = 'Discount';
 $_['text_error_message'] = 'Something went wrong. You can not order by Easebuzz.';
