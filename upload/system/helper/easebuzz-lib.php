@@ -2,21 +2,24 @@
 
 /**
  * Displays the pay page.
- * 
- * @param unknown $params        	
- * @param unknown $salt        	
+ *
+ * @param unknown $params
+ * @param unknown $salt
  * @throws Exception
  */
 function easepay_page ( $params, $salt, $env='test' ){
+  foreach($params as $key => $value) {
+      $params[$key] = trim($value);
+    }
     $result = pay( $params, $salt, $env);
     return $result;
 }
 
 /**
  * Returns the pay page url or the merchant js file.
- * 
- * @param unknown $params        	
- * @param unknown $salt        	
+ *
+ * @param unknown $params
+ * @param unknown $salt
  * @throws Exception
  * @return Ambigous <multitype:number string , multitype:number Ambigous <boolean, string> >
  */
@@ -34,9 +37,9 @@ function pay ( $params, $salt, $env='test')
 
 /**
  * Returns the response object.
- * 
- * @param unknown $params        	
- * @param unknown $salt        	
+ *
+ * @param unknown $params
+ * @param unknown $salt
  * @throws Exception
  * @return number
  */
@@ -112,7 +115,7 @@ class Payment {
     private $url;
     private $salt;
     private $params = array();
-    
+
     public function __construct ( $salt, $env = 'test' )
     {
         $this->salt = $salt;
@@ -156,13 +159,13 @@ class Payment {
                     $result = Misc::curl_call( $this->url . 'payment/initiateLink', http_build_query( $this->params ) );
                     $transaction_id = ($result['curl_status'] === Misc::SUCCESS) ? $result['result'] : null;
                     if ( empty( $transaction_id ) ){
-                        return array ( 'status' => Misc::FAILURE, 
+                        return array ( 'status' => Misc::FAILURE,
                             'data' => $result['error'] );
                     }else{
-                        return array ( 
-                            'status' => Misc::SUCCESS, 
+                        return array (
+                            'status' => Misc::SUCCESS,
                             'data' => $this->url . 'pay/' . $transaction_id );
-                    }				
+                    }
             } else {
                     return array ( 'status' => Misc::FAILURE, 'data' => $error );
             }
@@ -191,7 +194,7 @@ class Payment {
 
 
 class Misc {
-	
+
 	const SUCCESS = 1;
 	const FAILURE = 0;
 
@@ -215,7 +218,7 @@ class Misc {
             $hash_string .= $salt;
             return strtolower( hash( 'sha512', $hash_string ) );
 	}
-        
+
 	public static function reverse_hash ( $params, $salt, $status )
 	{
             $posted = array ();
@@ -237,15 +240,15 @@ class Misc {
 	}
 
 	public static function curl_call ( $url, $data )
-	{   
+	{
             $ch = curl_init();
-            curl_setopt_array( $ch, array ( 
-                    CURLOPT_URL => $url, 
-                    CURLOPT_POSTFIELDS => $data, 
-                    CURLOPT_POST => true, 
-                    CURLOPT_RETURNTRANSFER => true, 
-                    CURLOPT_USERAGENT => 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/36.0.1985.125 Safari/537.36', 
-                    CURLOPT_SSL_VERIFYHOST => 0, 
+            curl_setopt_array( $ch, array (
+                    CURLOPT_URL => $url,
+                    CURLOPT_POSTFIELDS => $data,
+                    CURLOPT_POST => true,
+                    CURLOPT_RETURNTRANSFER => true,
+                    CURLOPT_USERAGENT => 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/36.0.1985.125 Safari/537.36',
+                    CURLOPT_SSL_VERIFYHOST => 0,
                     CURLOPT_SSL_VERIFYPEER => 0 ) );
             $o = curl_exec( $ch );
             if ( curl_errno( $ch ) ) {
@@ -260,7 +263,7 @@ class Misc {
             }else{
                 return array ( 'curl_status' => Misc::FAILURE, 'error' => $res->data );
             }
-		
+
 	}
 
 	public static function show_page ( $result )
@@ -299,7 +302,7 @@ class Curl {
     }
 
     function __destruct() {
-        
+
     }
 
     private function getHost($url) {
@@ -454,11 +457,11 @@ class Cookies {
     private $cookies;
 
     function __construct() {
-        
+
     }
 
     function __destruct() {
-        
+
     }
 
     public function add($cookie) {
