@@ -1,7 +1,7 @@
 # paywitheasebuzz-opencart-lib-2.x 
 open-cart integration for PayWithEasebuzz 
 
-##Steps:
+## Steps:
 
 1. login to admin 
 2. Install plugin
